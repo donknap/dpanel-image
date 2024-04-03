@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    privileged: true
+    ports:
+      - 8807:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock

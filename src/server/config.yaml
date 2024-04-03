@@ -1,0 +1,31 @@
+app:
+  name: rangine
+  env: debug
+  server: http
+  cors:
+    - http://localhost:8000
+server:
+  http:
+    host: 0.0.0.0
+    port: 8086
+log:
+  default:
+    driver: stack
+    channels:
+      - file
+      - console
+  file:
+    driver: file
+    path: run.log
+    level: info
+  console:
+    driver: console
+    level: debug
+database:
+  default:
+    driver: sqlite
+    user_name: ${DB_USERNAME-root}
+    password: ${DB_PASSWORD-123456}
+    db_name: ${DB_DATABASE-/dpanel/dpanel.db}
+    charset: utf8mb4
+    prefix: ims_
