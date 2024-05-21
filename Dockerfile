@@ -17,7 +17,4 @@ COPY ./src/html /home/html
 COPY ./src/nginx/default.conf /etc/nginx/http.d/default.conf
 COPY ./src/entrypoint.sh /docker/entrypoint.sh
 
-RUN chmod 755 /home/server/dpanel && \ 
-  mkdir -p /dpanel/storage
-
 ENTRYPOINT [ "sh", "/docker/entrypoint.sh" ]
