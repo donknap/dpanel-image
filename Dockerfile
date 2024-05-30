@@ -1,20 +1,30 @@
 FROM alpine
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
-RUN apk add --no-cache --update nginx musl sqlite
+ENV DOCKER_HOST=unix:///var/run/docker.sock
+ENV STORAGE_LOCAL_PATH=/dpanel
+ENV DB_DATABASE=${STORAGE_LOCAL_PATH}/dpanel.db
 
-WORKDIR /home
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+RUN apk add --no-cache --update nginx musl sqlite inotify-tools
+
+RUN mkdir -p /dpanel/nginx/default_host /dpanel/nginx/proxy_host \
+  /dpanel/nginx/redirection_host /dpanel/nginx/dead_host \
+  /dpanel/nginx/temp \
+  /tmp/nginx/body /var/lib/nginx/cache/public /var/lib/nginx/cache/private
+
+COPY ./src/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./src/nginx/dpanel.conf /etc/nginx/http.d/dpanel.conf
+COPY ./src/nginx/include /dpanel/nginx/include
+
+COPY ./src/server /app/server
+COPY ./src/html /app/html
+
+COPY ./src/entrypoint.sh /docker/entrypoint.sh
+
+WORKDIR /app
 VOLUME [ "/dpanel" ]
 
-ENV DOCKER_HOST=unix:///var/run/docker.sock
-ENV DB_DATABASE=/dpanel/dpanel.db
-
-EXPOSE 8806
+EXPOSE 8080
 EXPOSE 80
-
-COPY ./src/server /home/server
-COPY ./src/html /home/html
-COPY ./src/nginx/default.conf /etc/nginx/http.d/default.conf
-COPY ./src/entrypoint.sh /docker/entrypoint.sh
 
 ENTRYPOINT [ "sh", "/docker/entrypoint.sh" ]
