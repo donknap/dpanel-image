@@ -8,9 +8,10 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/re
 RUN apk add --no-cache --update nginx musl sqlite inotify-tools
 
 RUN mkdir -p /dpanel/nginx/default_host /dpanel/nginx/proxy_host \
-  /dpanel/nginx/redirection_host /dpanel/nginx/dead_host \
-  /dpanel/nginx/temp \
-  /tmp/nginx/body /var/lib/nginx/cache/public /var/lib/nginx/cache/private
+  /dpanel/nginx/redirection_host /dpanel/nginx/dead_host /dpanel/nginx/temp \
+  /dpanel/nginx/cert \
+  /tmp/nginx/body /var/lib/nginx/cache/public /var/lib/nginx/cache/private \
+  /dpanel/storage
 
 COPY ./src/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./src/nginx/dpanel.conf /etc/nginx/http.d/dpanel.conf
