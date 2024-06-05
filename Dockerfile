@@ -25,6 +25,7 @@ COPY ./src/entrypoint.sh /docker/entrypoint.sh
 WORKDIR /app
 VOLUME [ "/dpanel" ]
 
+EXPOSE 443
 EXPOSE 8080
 EXPOSE 80
 
