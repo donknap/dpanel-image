@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[8022],{92922:function(o,t,n){n.r(t),n.d(t,{default:function(){return u}});var c=n(62435),s=n(86074);function u(){return(0,s.jsx)("div",{children:"ComposeList"})}}}]);
