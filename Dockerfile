@@ -5,7 +5,7 @@ ENV STORAGE_LOCAL_PATH=/dpanel
 ENV DB_DATABASE=${STORAGE_LOCAL_PATH}/dpanel.db
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
-  apk add --no-cache --update nginx musl sqlite inotify-tools docker-compose && \
+  apk add --no-cache --update nginx musl sqlite inotify-tools docker-compose curl && \
   curl https://get.acme.sh | sh
 
 RUN mkdir -p /dpanel/nginx/default_host /dpanel/nginx/proxy_host \
