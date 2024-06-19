@@ -6,7 +6,8 @@ ENV STORAGE_LOCAL_PATH=/dpanel
 ENV DB_DATABASE=${STORAGE_LOCAL_PATH}/dpanel.db
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
-  apk add --no-cache --update nginx musl sqlite inotify-tools docker-compose curl openssl
+  apk add --no-cache --update nginx musl sqlite inotify-tools docker-compose curl openssl && \
+  mkdir -p /tmp/nginx/body /var/lib/nginx/cache/public /var/lib/nginx/cache/private
 
 COPY ./src/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./src/nginx/dpanel.conf /etc/nginx/http.d/dpanel.conf
