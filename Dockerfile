@@ -3,12 +3,10 @@ FROM alpine
 ENV DOCKER_HOST=unix:///var/run/docker.sock
 ENV STORAGE_LOCAL_PATH=/dpanel
 ENV DB_DATABASE=${STORAGE_LOCAL_PATH}/dpanel.db
-ENV https_proxy=http://172.16.1.198:7890 
-ENV http_proxy=http://172.16.1.198:7890
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
-  apk add --no-cache --update nginx musl sqlite inotify-tools docker-compose curl openssl && \
-  curl https://get.acme.sh | sh
+  apk add --no-cache --update nginx musl sqlite inotify-tools docker-compose curl openssl
+RUN export https_proxy=http://172.16.1.198:7890 http_proxy=http://172.16.1.198:7890 && curl https://get.acme.sh | sh
 
 RUN mkdir -p /dpanel/nginx/default_host /dpanel/nginx/proxy_host \
   /dpanel/nginx/redirection_host /dpanel/nginx/dead_host /dpanel/nginx/temp \
