@@ -8,7 +8,7 @@ chmod 755 /home/server/dpanel && mkdir -p /dpanel/nginx/default_host /dpanel/ngi
 
 reload_nginx() {
     echo "Reloading Nginx configuration..."
-    nginx -s reload
+    nginx -s stop && nginx
     if [ $? -ne 0 ]; then
         echo "Failed to reload Nginx configuration."
     fi
