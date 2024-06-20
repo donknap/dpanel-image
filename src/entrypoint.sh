@@ -4,11 +4,11 @@ NGINX_CONFIG_DIR="/dpanel/nginx"
 
 chmod 755 /home/server/dpanel && mkdir -p /dpanel/nginx/default_host /dpanel/nginx/proxy_host \
   /dpanel/nginx/redirection_host /dpanel/nginx/dead_host /dpanel/nginx/temp \
-  /dpanel/nginx/cert /dpanel/storage /dpanel/challenge/.well-known/acme-challenge
+  /dpanel/cert /dpanel/storage
 
 reload_nginx() {
     echo "Reloading Nginx configuration..."
-    nginx -s stop && nginx
+    nginx -s reload
     if [ $? -ne 0 ]; then
         echo "Failed to reload Nginx configuration."
     fi
