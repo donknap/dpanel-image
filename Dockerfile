@@ -14,7 +14,7 @@ COPY ./src/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./src/nginx/dpanel.conf /etc/nginx/http.d/dpanel.conf
 COPY ./src/nginx/include /etc/nginx/conf.d/include
 
-COPY ./src/server /app/server
+COPY ./src/server/${BUILD_PLATFORM}/dpanel /app/server/dpanel
 COPY ./src/html /app/html
 
 COPY ./src/entrypoint.sh /docker/entrypoint.sh
