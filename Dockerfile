@@ -7,26 +7,29 @@ ENV DB_DATABASE=${STORAGE_LOCAL_PATH}/dpanel.db
 ARG BUILDPLATFORM
 ARG TARGETARCH
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
-  apk add --no-cache --update nginx musl sqlite inotify-tools docker-compose curl openssl && \
-  mkdir -p /tmp/nginx/body /var/lib/nginx/cache/public /var/lib/nginx/cache/private && \
-  export https_proxy=http://172.16.1.198:7890 http_proxy=http://172.16.1.198:7890 && curl https://get.acme.sh | sh
+RUN echo ${BUILDPLATFORM} 
+RUN echo ${TARGETARCH}
 
-COPY ./src/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./src/nginx/dpanel.conf /etc/nginx/http.d/dpanel.conf
-COPY ./src/nginx/include /etc/nginx/conf.d/include
+# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
+#   apk add --no-cache --update nginx musl libc6-compat inotify-tools docker-compose curl openssl && \
+#   mkdir -p /tmp/nginx/body /var/lib/nginx/cache/public /var/lib/nginx/cache/private && \
+#   export https_proxy=http://172.16.1.198:7890 http_proxy=http://172.16.1.198:7890 && curl https://get.acme.sh | sh
 
-COPY ./src/server/dpanel-${TARGETARCH} /app/server/dpanel
-COPY ./src/server/config.yaml /app/server/config.yaml
-COPY ./src/html /app/html
+# COPY ./src/nginx/nginx.conf /etc/nginx/nginx.conf
+# COPY ./src/nginx/dpanel.conf /etc/nginx/http.d/dpanel.conf
+# COPY ./src/nginx/include /etc/nginx/conf.d/include
 
-COPY ./src/entrypoint.sh /docker/entrypoint.sh
+# COPY ./src/server/dpanel-${TARGETARCH} /app/server/dpanel
+# COPY ./src/server/config.yaml /app/server/config.yaml
+# COPY ./src/html /app/html
 
-WORKDIR /app
-VOLUME [ "/dpanel" ]
+# COPY ./src/entrypoint.sh /docker/entrypoint.sh
 
-EXPOSE 443
-EXPOSE 8080
-EXPOSE 80
+# WORKDIR /app
+# VOLUME [ "/dpanel" ]
 
-ENTRYPOINT [ "sh", "/docker/entrypoint.sh" ]
+# EXPOSE 443
+# EXPOSE 8080
+# EXPOSE 80
+
+# ENTRYPOINT [ "sh", "/docker/entrypoint.sh" ]
