@@ -23,6 +23,7 @@ r2:
 	--platform linux/arm64,linux/amd64 \
 	--build-arg APP_VERSION=${VERSION} \
 	. --push
+	
 push:
 	git add . && git commit -a -m "update"
 	git push
