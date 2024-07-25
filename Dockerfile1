@@ -1,8 +1,0 @@
-FROM scratch
-
-COPY ./src/server/dpanel-amd64 /app/server/dpanel
-COPY ./src/server/config.yaml /app/server/config.yaml
-
-WORKDIR /app
-
-ENTRYPOINT [ "/app/server/dpanel", "-f", "/app/server/config.yaml" ]

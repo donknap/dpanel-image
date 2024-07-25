@@ -9,24 +9,31 @@ help:
 	@echo "make clean"
 
 test: build
-	docker buildx build -t ccr.ccs.tencentyun.com/dpanel/dpanel:test \
+	docker buildx build \
+	-t ccr.ccs.tencentyun.com/dpanel/dpanel:test \
+	-t ccr.ccs.tencentyun.com/dpanel/dpanel:${VERSION}-test \
 	--platform linux/arm64,linux/amd64 \
 	--build-arg APP_VERSION=${VERSION} \
 	. --push
 r1:
-	docker buildx build -t dpanel/dpanel:latest \
+	docker buildx build \
+	-t dpanel/dpanel:latest \
+	-t dpanel/dpanel:${VERSION} \
 	--platform linux/arm64,linux/amd64 \
 	--build-arg APP_VERSION=${VERSION} \
 	. --push
 r2:
-	docker buildx build -t ccr.ccs.tencentyun.com/dpanel/dpanel:latest \
+	docker buildx build \
+	-t ccr.ccs.tencentyun.com/dpanel/dpanel:latest \
+	-t ccr.ccs.tencentyun.com/dpanel/dpanel:${VERSION} \
 	--platform linux/arm64,linux/amd64 \
 	--build-arg APP_VERSION=${VERSION} \
 	. --push
 	
 push:
+	git tag ${VERSION}
 	git add . && git commit -a -m "update"
-	git push
+	git push --tag
 
 build: clean-source
 	cd ${GO_SOURCE_DIR} && make GO_TARGET_DIR=${TARGET_DIR}/server linux arm
